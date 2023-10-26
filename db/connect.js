@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
+const logger = require('../logging/logger');
 
 const connectDB = async (url) => {
   try {
     await mongoose.connect(url);
-    console.log('MongoDB Connected');
+    logger.info('MongoDB Connected');
   } catch (err) {
-    console.log('Error connecting to MongoDB Atlas:', err);
+    logger.error('Error connecting to MongoDB Atlas:', err);
   }
 };
 
