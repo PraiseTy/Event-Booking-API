@@ -8,10 +8,11 @@ const {
   updateArtist,
   deleteArtist
 } = require('../controllers/artists');
+const { validateFields, validateFieldsMiddleware } = require('../middleware/validation');
 
 const router = express.Router();
 
-router.post('/', createNewArtist);
+router.post('/', validateFields, validateFieldsMiddleware, createNewArtist);
 router.get('/artists', getAllArtists);
 router.get('/id', getArtist);
 router.post('/login', loginArtist);

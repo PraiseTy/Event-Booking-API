@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const artistSchema = new mongoose.Schema({
   name: {
@@ -12,7 +14,8 @@ const artistSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    minlength: 6
   },
   genre: [
     {
@@ -22,5 +25,22 @@ const artistSchema = new mongoose.Schema({
   ],
   bio: String
 });
+
+artistSchema.pre('save', async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+artistSchema.methods.createJWT = function () {
+  return jwt.sign(
+    {
+      artistId: this._id,
+      name: this.name
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_LIFETIME }
+  );
+};
 
 module.exports = mongoose.model('Artist', artistSchema);

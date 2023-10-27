@@ -1,7 +1,12 @@
 const Artist = require('../models/Artist');
+const HTTP_STATUS = require('../constant');
 
 const createNewArtist = async (req, res) => {
-  res.json('Create new artists');
+  const artist = await Artist.create({ ...req.body });
+  const token = artist.createJWT();
+  res
+    .status(HTTP_STATUS.CREATED)
+    .json({ message: 'Artist created successfully', data: { id: artist._id, name: artist.name } });
 };
 
 const getAllArtists = async (req, res) => {
