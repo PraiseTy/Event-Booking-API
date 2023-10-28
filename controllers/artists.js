@@ -4,7 +4,6 @@ const HTTP_STATUS = require('../constant');
 const createNewArtist = async (req, res) => {
   try {
     const artist = await Artist.create({ ...req.body });
-    const token = artist.createJWT();
     res.status(HTTP_STATUS.CREATED).json({
       message: 'Artist created successfully',
       data: { id: artist._id, name: artist.name }
@@ -41,7 +40,20 @@ const getArtist = async (req, res) => {
 };
 
 const loginArtist = async (req, res) => {
-  res.json('Log in artist');
+  const { email, password, name } = req.body;
+  const artist = await Artist.findOne({ email });
+
+  const isPasswordCorrect = await artist.comparePassword(password);
+  if (!isPasswordCorrect) {
+    return res.status(HTTP_STATUS.UNAUTHORIZED).json({ error: 'Invalid Credentials' });
+  }
+
+  const token = artist.createJWT();
+  res.json({
+    message: 'Login Successfully',
+    token,
+    data: { id: artist._id, name: artist.name, email: artist.email }
+  });
 };
 
 const getArtistProfile = async (req, res) => {

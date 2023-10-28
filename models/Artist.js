@@ -36,11 +36,16 @@ artistSchema.methods.createJWT = function () {
   return jwt.sign(
     {
       artistId: this._id,
-      name: this.name
+      name: this.name,
+      email: this.email
     },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );
 };
 
+artistSchema.methods.comparePassword = async function (userPassword) {
+  const isMatch = await bcrypt.compare(userPassword, this.password);
+  return isMatch;
+};
 module.exports = mongoose.model('Artist', artistSchema);
