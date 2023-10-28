@@ -13,8 +13,8 @@ const { validateFields, validateFieldsMiddleware } = require('../middleware/vali
 const router = express.Router();
 
 router.post('/', validateFields, validateFieldsMiddleware, createNewArtist);
-router.get('/artists', getAllArtists);
-router.get('/id', getArtist);
+router.get('/', getAllArtists);
+router.get('/:id', getArtist);
 router.post('/login', loginArtist);
 router.get('/me', getArtistProfile);
 router.put('/', updateArtist);
