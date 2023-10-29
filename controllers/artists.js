@@ -56,8 +56,19 @@ const loginArtist = async (req, res) => {
   });
 };
 
-const getArtistProfile = async (req, res) => {
-  res.json('Return an artist profile');
+const getProfile = async (req, res) => {
+  try {
+    const artist = await Artist.findOne({ id: req.user.id }).select('-password');
+    if (!artist) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Artist not found' });
+    }
+
+    res.json(artist);
+  } catch (error) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Something went wrong. Try Again' });
+  }
 };
 
 const updateArtist = async (req, res) => {
@@ -73,7 +84,7 @@ module.exports = {
   getAllArtists,
   getArtist,
   loginArtist,
-  getArtistProfile,
+  getProfile,
   updateArtist,
   deleteArtist
 };
