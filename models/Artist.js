@@ -35,7 +35,7 @@ artistSchema.pre('save', async function (next) {
 artistSchema.methods.createJWT = function () {
   return jwt.sign(
     {
-      artistId: this._id,
+      artistId: this.id,
       name: this.name,
       email: this.email
     },

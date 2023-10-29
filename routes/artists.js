@@ -16,10 +16,10 @@ const router = express.Router();
 
 router.post('/', validateFields, validateFieldsMiddleware, createNewArtist);
 router.get('/', getAllArtists);
-router.get('/:id', getArtist);
 router.post('/login', loginValidation, validateFieldsMiddleware, loginArtist);
 router.post('/me', authenticateUser, getProfile);
 router.put('/', updateArtist);
 router.delete('/', deleteArtist);
+router.get('/:id', getArtist);
 
 module.exports = router;

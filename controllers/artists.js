@@ -1,5 +1,6 @@
 const Artist = require('../models/Artist');
 const HTTP_STATUS = require('../constant');
+const logger = require('../logging/logger');
 
 const createNewArtist = async (req, res) => {
   try {
@@ -52,13 +53,13 @@ const loginArtist = async (req, res) => {
   res.json({
     message: 'Login Successfully',
     token,
-    data: { id: artist._id, name: artist.name, email: artist.email }
+    data: { id: artist.id, name: artist.name, email: artist.email }
   });
 };
 
 const getProfile = async (req, res) => {
   try {
-    const artist = await Artist.findOne({ id: req.user.id }).select('-password');
+    const artist = await Artist.findOne({ email: req.user.email }).select('-password');
     if (!artist) {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Artist not found' });
     }
