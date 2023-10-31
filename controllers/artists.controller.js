@@ -34,9 +34,11 @@ const getArtist = async (req, res) => {
         .status(HTTP_STATUS.NOT_FOUND)
         .json({ error: `No artist with id ${artistId}. Try again` });
     }
-    res.json(artist);
+    return res.json(artist);
   } catch (error) {
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong.Try again' });
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Something went wrong.Try again' });
   }
 };
 
@@ -50,7 +52,7 @@ const loginArtist = async (req, res) => {
   }
 
   const token = artist.createJWT();
-  res.json({
+  return res.json({
     message: 'Login Successfully',
     token,
     data: { id: artist.id, name: artist.name, email: artist.email }
@@ -64,7 +66,7 @@ const getProfile = async (req, res) => {
       return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Artist not found' });
     }
 
-    res.json(artist);
+    return res.json(artist);
   } catch (error) {
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
