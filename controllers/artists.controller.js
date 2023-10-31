@@ -1,4 +1,4 @@
-const Artist = require('../models/Artist');
+const Artist = require('../models/Artist.model');
 const HTTP_STATUS = require('../constant');
 const logger = require('../logging/logger');
 

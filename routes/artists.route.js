@@ -7,10 +7,10 @@ const {
   getProfile,
   updateArtist,
   deleteArtist
-} = require('../controllers/artists');
-const { loginValidation } = require('../middleware/validateLogin');
-const { validateFields, validateFieldsMiddleware } = require('../middleware/validation');
-const authenticateUser = require('../middleware/authentication');
+} = require('../controllers/artists.controller');
+const { loginValidation } = require('../middleware/validateLogin.middleware');
+const { validateFields, validateFieldsMiddleware } = require('../middleware/validation.middleware');
+const authenticateUser = require('../middleware/authentication.middleware');
 
 const router = express.Router();
 
