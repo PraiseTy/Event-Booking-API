@@ -4,10 +4,11 @@ const logger = require('../logging/logger');
 
 const createNewArtist = async (req, res) => {
   try {
-    const artist = await Artist.create({ ...req.body });
+    const { name, email, password, genre, bio } = req.body;
+    const artist = await Artist.create({ name, email, password, genre, bio });
     res.status(HTTP_STATUS.CREATED).json({
       message: 'Artist created successfully',
-      data: { id: artist._id, name: artist.name }
+      data: { id: artist._id, name }
     });
   } catch (error) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: 'Something went wrong.Try Again' });
