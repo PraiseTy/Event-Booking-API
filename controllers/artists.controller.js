@@ -1,6 +1,5 @@
 const Artist = require('../models/Artist.model');
 const HTTP_STATUS = require('../constant');
-const logger = require('../logging/logger');
 
 const createNewArtist = async (req, res) => {
   try {
