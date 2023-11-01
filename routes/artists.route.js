@@ -10,6 +10,7 @@ const {
 } = require('../controllers/artists.controller');
 const { loginValidation } = require('../middleware/validateLogin.middleware');
 const { validateFields, validateFieldsMiddleware } = require('../middleware/validation.middleware');
+const { updateValidation } = require('../middleware/updateLogin.middleware');
 const authenticateUser = require('../middleware/authentication.middleware');
 
 const router = express.Router();
@@ -18,7 +19,7 @@ router.post('/', validateFields, validateFieldsMiddleware, createNewArtist);
 router.get('/', getAllArtists);
 router.post('/login', loginValidation, validateFieldsMiddleware, loginArtist);
 router.post('/me', authenticateUser, getProfile);
-router.put('/', updateArtist);
+router.put('/', authenticateUser, updateValidation, validateFieldsMiddleware, updateArtist);
 router.delete('/', deleteArtist);
 router.get('/:id', getArtist);
 
