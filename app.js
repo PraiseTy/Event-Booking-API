@@ -1,15 +1,15 @@
 require('dotenv').config();
 const express = require('express');
-const connectDB = require('./db/connect');
+const connectDB = require('./db/connect.db');
 const logger = require('./logging/logger');
-const artistRouter = require('./routes/artists');
-const eventRouter = require('./routes/events');
+const artistRouter = require('./routes/artists.route');
+const eventRouter = require('./routes/events.route');
 
 app = express();
 
 app.use(express.json());
 
-app.use('/api/v1/artist', artistRouter);
+app.use('/api/v1/artists', artistRouter);
 app.use('/api/v1/event', eventRouter);
 
 const port = process.env.PORT || 3000;
