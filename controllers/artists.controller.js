@@ -81,14 +81,12 @@ const updateArtist = async (req, res) => {
   if (!artist) {
     return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Artist cannot be found. Try again' });
   }
-  const updatedArtist = await Artist.findOneAndUpdate(
+  const updatedArtist = await Artist.updateOne(
     { _id: artistId },
     { name, email, genre, bio },
     { new: true }
   );
-  if (!updatedArtist) {
-    return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Artist not found' });
-  }
+
   return res.status(HTTP_STATUS.OK).json({
     message: 'Artist updated successfully',
     data: { _id: artistId, name, email, genre, bio }
