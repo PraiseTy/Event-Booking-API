@@ -12,7 +12,12 @@ const auth = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { _id: payload.id, name: payload.name, email: payload.email, bio: payload.bio };
+    req.user = {
+      _id: payload.artistId,
+      name: payload.name,
+      email: payload.email,
+      bio: payload.bio
+    };
     next();
   } catch (error) {
     return res.status(HTTP_STATUS.UNAUTHORIZED).json({ error: 'Invalid Authentication' });

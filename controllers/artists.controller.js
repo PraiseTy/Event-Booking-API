@@ -75,7 +75,22 @@ const getProfile = async (req, res) => {
 };
 
 const updateArtist = async (req, res) => {
-  res.json('Update artist profile');
+  const { _id: artistId } = req.user;
+  const { name, email, password, genre, bio } = req.body;
+  const artist = await Artist.findOne({ _id: artistId });
+  if (!artist) {
+    return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Artist cannot be found. Try again' });
+  }
+  const updatedArtist = await Artist.updateOne(
+    { _id: artistId },
+    { name, email, genre, bio },
+    { new: true }
+  );
+
+  return res.status(HTTP_STATUS.OK).json({
+    message: 'Artist updated successfully',
+    data: { _id: artistId, name, email, genre, bio }
+  });
 };
 
 const deleteArtist = async (req, res) => {
