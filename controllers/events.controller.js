@@ -41,7 +41,18 @@ const getAllEvents = async (req, res) => {
 };
 
 const getEvent = async (req, res) => {
-  res.json('Get a single event');
+  try {
+    const { id: eventId } = req.params;
+    const event = await Event.findOne({ _id: eventId });
+    if (!event) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({ error: 'Event not found. Try again' });
+    }
+    return res.json(event);
+  } catch (error) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Something went wrong, Try again' });
+  }
 };
 
 const updateEvent = async (req, res) => {
