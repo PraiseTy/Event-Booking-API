@@ -10,7 +10,7 @@ app = express();
 app.use(express.json());
 
 app.use('/api/v1/artists', artistRouter);
-app.use('/api/v1/event', eventRouter);
+app.use('/api/v1/events', eventRouter);
 
 const port = process.env.PORT || 3000;
 

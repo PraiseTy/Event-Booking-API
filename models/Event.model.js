@@ -6,9 +6,15 @@ const eventSchema = new mongoose.Schema({
     required: true
   },
   artist: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Artist',
-    required: true
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Artist',
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
   },
   date: {
     type: Date,
