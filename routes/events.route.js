@@ -15,7 +15,7 @@ const router = express.Router();
 router.post('/', validateEvents, validateFieldsMiddleware, authenticateUser, createNewEvent);
 router.get('/', getAllEvents);
 router.get('/:id', getEvent);
-router.put('/:id', updateEvent);
-router.delete('/:id', deleteEvent);
+router.put('/:id', authenticateUser, updateEvent);
+router.delete('/:id', authenticateUser, deleteEvent);
 
 module.exports = router;
