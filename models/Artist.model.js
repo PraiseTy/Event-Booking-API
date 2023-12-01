@@ -26,13 +26,13 @@ const artistSchema = new mongoose.Schema({
   bio: String
 });
 
-artistSchema.pre('save', async function (next) {
+artistSchema.pre('save', async function preSaveHook(next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-artistSchema.methods.createJWT = function () {
+artistSchema.methods.createJWT = function createJWT() {
   return jwt.sign(
     {
       artistId: this.id,
@@ -44,7 +44,7 @@ artistSchema.methods.createJWT = function () {
   );
 };
 
-artistSchema.methods.comparePassword = async function (userPassword) {
+artistSchema.methods.comparePassword = async function comparePassword(userPassword) {
   const isMatch = await bcrypt.compare(userPassword, this.password);
   return isMatch;
 };

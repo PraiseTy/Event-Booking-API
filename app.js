@@ -5,7 +5,7 @@ const logger = require('./logging/logger');
 const artistRouter = require('./routes/artists.route');
 const eventRouter = require('./routes/events.route');
 
-app = express();
+const app = express();
 
 app.use(express.json());
 

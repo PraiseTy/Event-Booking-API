@@ -18,7 +18,7 @@ const router = express.Router();
 router.post('/', validateFields, validateFieldsMiddleware, createNewArtist);
 router.get('/', getAllArtists);
 router.post('/login', loginValidation, validateFieldsMiddleware, loginArtist);
-router.post('/me', authenticateUser, getProfile);
+router.get('/me', authenticateUser, getProfile);
 router.put('/', authenticateUser, updateValidation, validateFieldsMiddleware, updateArtist);
 router.delete('/', deleteArtist);
 router.get('/:id', getArtist);
