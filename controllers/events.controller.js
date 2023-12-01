@@ -1,6 +1,7 @@
 const Event = require('../models/Event.model');
 const Artist = require('../models/Artist.model');
 const HTTP_STATUS = require('../constant');
+const logger = require('../logging/logger');
 
 const createNewEvent = async (req, res) => {
   try {
@@ -23,6 +24,7 @@ const createNewEvent = async (req, res) => {
       data: { id: artist._id, title, location, date }
     });
   } catch (error) {
+    logger.error(error);
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ error: 'Something went wrong.Try again' });
@@ -49,6 +51,7 @@ const getEvent = async (req, res) => {
     }
     return res.json(event);
   } catch (error) {
+    logger.error(error);
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
       .json({ error: 'Something went wrong, Try again' });
